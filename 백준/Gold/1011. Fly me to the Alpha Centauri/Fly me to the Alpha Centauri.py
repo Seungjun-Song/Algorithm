@@ -14,10 +14,10 @@ for _ in range(T):
 
     if distance > num_square + num:
         count = 2 * num + 1
-    elif distance > num_square and distance <= num_square + num:
-        count = 2 * num
     elif distance == num_square:
         count = 2 * num - 1
+    elif distance <= num_square + num:
+        count = 2 * num
 
     if distance < 4:
         count = distance
