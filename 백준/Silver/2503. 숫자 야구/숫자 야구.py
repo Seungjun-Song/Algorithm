@@ -1,24 +1,26 @@
 from itertools import permutations
+
 N = int(input())
+num = list(permutations([i for i in range(1, 10)], 3))
 
-data = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-num = list(permutations(data, 3))
+cnt = 0
+for i in range(N):
+    throw, strike, ball = map(int, input().split())
+    throw = list(map(int, str(throw)))
+    r_cnt = 0
 
-for _ in range(N):
-    n, s, b = map(int, input().split())
-    n = list(str(n))
-    rmcnt = 0
     for i in range(len(num)):
-        strike = ball = 0
-        i -= rmcnt # num[0] 부터 시작
+        s, b = 0, 0
+        i -= r_cnt
         for j in range(3):
-            if num[i][j] == n[j]:
-                strike += 1
-            elif n[j] in num[i]:
-                ball += 1
-            
-        if (strike != s) or (ball != b):
+            if throw[j] == num[i][j]:
+                s += 1
+            else:
+                if throw[j] in num[i]:
+                    b += 1
+        
+        if s != strike or b != ball:
             num.remove(num[i])
-            rmcnt += 1
-
+            r_cnt += 1
+    
 print(len(num))
