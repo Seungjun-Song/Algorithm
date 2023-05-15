@@ -1,19 +1,14 @@
 def solution(s):
     answer = True
-
-    if s[0] == ")":
-        return False
-
-    arr = []
+    
+    q = []
     for i in s:
         if i == "(":
-            arr.append(i)
+            q.append("(")
         else:
-            if len(arr) == 0:
-                return False
-            arr.pop()
+            if not q:
+                answer = False
+                break
+            q.pop()
 
-    if len(arr) != 0:
-        answer = False
-    
-    return answer
+    return answer if not q else False
