@@ -3,8 +3,6 @@ def solution(brown, yellow):
     
     for w in range(brown//2):
         for h in range(brown//2):
-            if brown == ((w*2) + ((h-2) * 2)) and yellow == ((w-2) * (h-2)):
-                answer = [w, h]
-                break
+            if w*h == brown+yellow and w>=h and (w-2)*(h-2)==yellow:
+                return w, h
     
-    return answer
