@@ -8,6 +8,6 @@ for _ in range(N):
 
 cnt = 0
 for i in range(M-N*2):
-    if Pn in S[i:i+N*2+1]:
+    if Pn == S[i:i+N*2+1]:
         cnt += 1
 print(cnt)
