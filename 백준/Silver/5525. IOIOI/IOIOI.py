@@ -2,12 +2,12 @@ N = int(input())
 M = int(input())
 S = input()
 
-Pn = 'I'
-for _ in range(N):
-    Pn += 'OI'
-
-cnt = 0
-for i in range(M-N*2):
-    if Pn == S[i:i+N*2+1]:
+Pn = 'I' + 'OI'*N
+i, cnt = 0, 0
+while i < len(S):
+    if Pn == S[i:i+len(Pn)]:
         cnt += 1
+        i += 2
+    else:
+        i += 1
 print(cnt)
