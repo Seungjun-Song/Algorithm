@@ -1,23 +1,45 @@
-T = int(input())
-for test in range(1, T+1):
-    N, M = map(int, input().split())
-    A = list(map(int, input().split()))
-    B = list(map(int, input().split()))
-    answer = 0
-    
-    if len(A)-len(B) > 0:
-        for i in range(len(A)-len(B)+1):
-            temp = 0
-            for j in range(len(B)):
-                temp += A[j+i]*B[j]
-            if answer < temp:
-                answer = temp
-    else:
-        for i in range(len(B)-len(A)+1):
-            temp = 0
-            for j in range(len(A)):
-                temp += A[j]*B[j+i]
-            if answer < temp:
-                answer = temp
-    
-    print("#{} {}".format(test, answer))
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		for(int i=1; i<=T; i++) {
+			int N = sc.nextInt();
+			int M = sc.nextInt();
+			int A[] = new int[N];
+			int B[] = new int[M];
+			for(int j=0; j<N; j++) {
+				A[j] = sc.nextInt();
+			}
+			for(int j=0; j<M; j++) {
+				B[j] = sc.nextInt();
+			}
+			
+			int max = 0;
+			if(N<M) {
+				for(int k=0; k<M-N+1; k++) {
+					int sum = 0;
+					for(int l=0; l<N; l++) {
+						sum += A[l]*B[l+k];
+					}
+					if(max<=sum) {
+						max = sum;
+					}
+				}
+			} else {
+				for(int k=0; k<N-M+1; k++) {
+					int sum = 0;
+					for(int l=0; l<M; l++) {
+						sum += A[l+k]*B[l];
+					}
+					if(max<=sum) {
+						max = sum;
+					}
+				}
+			}
+			System.out.println("#" + i + " " + max);
+		}
+	}
+}
