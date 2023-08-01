@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -7,9 +9,11 @@ public class Main {
 	static int M;
 	static int arr[];
 	static boolean visited[];
+	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
@@ -17,15 +21,17 @@ public class Main {
 		arr = new int[M];
 		visited = new boolean[N];
 		perm(0);
+		bw.write(sb.toString());
+		bw.flush();
+		bw.close();
 	}
 	
 	static void perm(int idx) {
 		if(arr.length == idx) {
-			StringBuilder sb = new StringBuilder();
 			for(int a : arr) {
 				sb.append(a + " ");
 			}
-			System.out.println(sb);
+			sb.append("\n");
 			return;
 		}
 		
