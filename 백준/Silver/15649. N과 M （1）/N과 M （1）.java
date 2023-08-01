@@ -21,10 +21,11 @@ public class Main {
 	
 	static void perm(int idx) {
 		if(arr.length == idx) {
+			StringBuilder sb = new StringBuilder();
 			for(int a : arr) {
-				System.out.print(a + " "); 
+				sb.append(a + " ");
 			}
-			System.out.println();
+			System.out.println(sb);
 			return;
 		}
 		
