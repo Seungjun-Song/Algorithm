@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -33,16 +32,17 @@ public class Main {
         		}
         	}
         	// 리스트에 일치하는 값이 없어서 교체 알고리즘을 써야 될 때
+        	int idx = Integer.MAX_VALUE-1; // 이후에 출현하지 않으면 Integer.MAX_VALUE 처리
+    		for(int j=i+1; j<arr.length; j++) {
+    			// 현재 넣어야될 전기용품이 다음에 몇번째 인덱스에 또 출현하는지 체크
+    			if(arr[i] == arr[j]) {
+    				idx = j;
+    				break;
+    			}
+    		}
+    		
         	if(flag) {
         		cnt++;
-        		int idx = Integer.MAX_VALUE-1; // 이후에 출현하지 않으면 Integer.MAX_VALUE-1 처리
-        		for(int j=i+1; j<arr.length; j++) {
-        			// 현재 넣어야될 전기용품이 다음에 몇번째 인덱스에 또 출현하는지 체크
-        			if(arr[i] == arr[j]) {
-        				idx = j;
-        				break;
-        			}
-        		}
         		
         		// 다음 번의 출현까지 오래 남은 idx,value 체크
         		int maxValue = 0, maxIdx = 0;
@@ -57,15 +57,6 @@ public class Main {
         		plug[maxIdx][0] = arr[i];
         		plug[maxIdx][1] = idx;
         	} else {
-        		int idx = Integer.MAX_VALUE-1; // 이후에 출현하지 않으면 Integer.MAX_VALUE 처리
-        		for(int j=i+1; j<arr.length; j++) {
-        			// 현재 넣어야될 전기용품이 다음에 몇번째 인덱스에 또 출현하는지 체크
-        			if(arr[i] == arr[j]) {
-        				idx = j;
-        				break;
-        			}
-        		}
-        		
         		// 다음에 나올 출현 위치 갱신
         		int subIdx = 0;
         		for(int j=0; j<plug.length; j++) {
