@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 public class Main {
 
 	public static void main(String args[]) throws IOException{
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
@@ -36,7 +35,7 @@ public class Main {
         	// 리스트에 일치하는 값이 없어서 교체 알고리즘을 써야 될 때
         	if(flag) {
         		cnt++;
-        		int idx = Integer.MAX_VALUE-1; // 이후에 출현하지 않으면 Integer.MAX_VALUE 처리
+        		int idx = Integer.MAX_VALUE-1; // 이후에 출현하지 않으면 Integer.MAX_VALUE-1 처리
         		for(int j=i+1; j<arr.length; j++) {
         			// 현재 넣어야될 전기용품이 다음에 몇번째 인덱스에 또 출현하는지 체크
         			if(arr[i] == arr[j]) {
@@ -76,14 +75,8 @@ public class Main {
         		}
         		plug[subIdx][1] = idx;
         	}
-        	
-//        	for(int[] p : plug) {
-//        		System.out.println(Arrays.toString(p));
-//        	}
-//        	System.out.println();
         }
         if(cnt-N < 0) System.out.println(0);
         else System.out.println(cnt-N);
     }
-	
 }
