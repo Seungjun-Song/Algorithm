@@ -3,59 +3,73 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Solution {
-	static int T, N, start, link, min;
-	static int arr[][];	
-	static boolean visited[];
-	static StringBuilder sb = new StringBuilder();
+    static int N, halfN, min;
+    static int[][] map;
+    static boolean[] select; // 재료 선택 비선택
+    static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine());
 
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		T = Integer.parseInt(br.readLine());
-		for(int tc=1; tc<=T; tc++) {
-			N = Integer.parseInt(br.readLine());
-			arr = new int[N][N];
-			visited = new boolean[N];
-			for(int i=0; i<N; i++) {
-				st = new StringTokenizer(br.readLine());
-				for(int j=0; j<N; j++) {
-					arr[i][j] = Integer.parseInt(st.nextToken());
-				}
-			}
-			
-			min = Integer.MAX_VALUE;
-			func(0, 0);
-			sb.append("#").append(tc).append(" ").append(min).append("\n");
-		}
-		System.out.println(sb);
-	}
-	
-	static void func(int depth, int idx) {
-		if(depth==N/2) {
-			func2();
-			return;
-		}
-		
-		for(int i=idx; i<N; i++) {
-			if(!visited[i]) {
-				visited[i] = true;
-				func(depth+1, i+1);
-				visited[i] = false;				
-			}
-		}
-	}
-	
-	static void func2() {
-		start = 0; link = 0;
-		for(int i=0; i<N; i++) {
-			for(int j=i+1; j<N; j++) {
-				if(visited[i] && visited[j])
-					start += arr[i][j] + arr[j][i];
-				else if(!visited[i] && !visited[j])
-					link += arr[i][j] + arr[j][i]; 
-			}
-		}
-		
-		min = Math.abs(start-link)<min ? Math.abs(start-link) : min;
-	}
+        for(int t=1; t<=T; t++) {
+            N = Integer.parseInt(br.readLine());
+
+            halfN = N/2;
+            map = new int[N][N];
+            select = new boolean[N];
+
+            for(int i=0; i<N; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                for(int j=0; j<N; j++) {
+                    map[i][j] = Integer.parseInt(st.nextToken());
+                }
+            }
+
+            //풀이
+            min = Integer.MAX_VALUE;
+            comb(0,0);
+            sb.append("#").append(t).append(" ").append(min).append("\n");
+        }
+
+        System.out.println(sb);
+    }
+
+    static void comb(int srcIdx, int tgtIdx) {
+    	// N /2 개를 선택
+    	if (tgtIdx == halfN) {
+    		// complete code
+    		check();
+    		return ;
+    	}
+    	
+    	if (srcIdx == N) return ;
+    	
+    	select[srcIdx]  = true;
+    	comb(srcIdx + 1, tgtIdx + 1); // 현재 src 를 tgt에 선택
+    	select[srcIdx] = false;
+    	comb(srcIdx+1,tgtIdx);
+    	
+    }
+    //select  배열에서 선택, 비선택 -> 두 그룹으로 나누어서 생각
+    // 각각의 그룹별 sum 계산 후 차이 계산 후 min
+    static void check() {
+    	int sumA = 0;	// 선택
+    	int sumB = 0;	// 비선택
+    	//i,j로 모든 2개씩 조합
+    	for(int i = 0; i < N -1 ; i ++) {
+    		for(int j = i+1; j < N ; j ++) {
+    			
+    			if (select[i] && select[j]) { // 선택 된 그룹
+    				sumA += map[i][j];
+    				sumA += map[j][i];
+    			}
+    			else if (!select[i] && !select[j]) { //선택되지 않은 그룹
+    				sumB += map[i][j];
+    				sumB += map[j][i];
+    			}
+    		}
+    	}
+    	min = Math.min(min,Math.abs(sumA-sumB));
+    }
+
 }
