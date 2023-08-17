@@ -23,7 +23,7 @@ public class Main {
 			temp[6] = dp[4] + dp[7];
 			temp[7] = dp[5] + dp[6];
 			
-			for(int j=0; j<8; j++)
+			for(int j=0; j<8; j++) 
 				temp[j] = temp[j] % 1000000007;
 			
 			dp = temp.clone();
