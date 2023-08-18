@@ -12,8 +12,6 @@ public class Main {
 	static int[] archer = new int[3]; // 조합으로 선택한 궁수의 x좌표
 	static List<Enemy> enemyCopy = new ArrayList<>();
 	static List<Enemy> enemy = new ArrayList<>(); // 시뮬레이션 과정에서 사용되는 (변하는 Enemy 를 관리)
-	static PriorityQueue<Enemy> pqueue = new PriorityQueue<>( 
-			(e1, e2) -> e1.d == e2.d ? e1.x - e2.x : e1.d - e2.d);
 
 	public static void main(String args[]) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -50,21 +48,32 @@ public class Main {
 			// 궁수 3명이 한명씩 적군 쏜다.
 			for(int i=0; i<3; i++) {
 				// 가장 가까운 적??
-				pqueue.clear();
-				
+				int minD = Integer.MAX_VALUE;
+				int minX = Integer.MAX_VALUE;
+				int minIdx = -1; // 가장 가까운 거리에 있는 적의 index
 				int ac = archer[i]; // 현재 궁수의 x좌표
 				int size = enemy.size(); // 현재 적군의 크기
 				for(int j=0; j<size; j++) {
 					Enemy e = enemy.get(j);
-					e.d = Math.abs(ac - e.x) + Math.abs(N - e.y);
-					if(e.d <= D) {
-						pqueue.offer(e);
+					int d = Math.abs(ac - e.x) + Math.abs(N - e.y);
+
+					if( d>D ) continue;
+					
+					if( minD == d ) {
+						if( minX > e.x ) {
+							minX = e.x;
+							minIdx = j;
+						}
+					} else if ( minD > d )  {
+						minD = d;
+						minX = e.x;
+						minIdx = j;
 					}
 				}
 				
-				// pqueue를 이용해서 우선순위가 높은 적군을 꺼낸다.
-				if(!pqueue.isEmpty()) {
-					pqueue.poll().dead = true;
+				// minIdx 가 유요하면 (있으면)
+				if( minIdx != -1 ) {
+					enemy.get(minIdx).dead = true;
 				}
 			}
 			// 죽은 적군을 enemy 제거, 남은 적군 한 칸 아래로 이동, 경계선을 벗어나면 enemy 에서 제거
