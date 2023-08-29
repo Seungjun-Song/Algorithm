@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-	static int[][] memoi;
+	static int[] memoi;
 	static int[][] item;
 	
 	public static void main(String[] args) throws Exception {
@@ -16,7 +16,7 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 		int K = Integer.parseInt(st.nextToken());
 		
-		memoi = new int[N+1][K+1];
+		memoi = new int[K+1];
 		item = new int[N+1][2];
 		for(int i=1; i<=N; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -28,23 +28,15 @@ public class Main {
 		}
 		
 		for(int i=1; i<=N; i++) {
-			for(int w=1; w<=K; w++) {
-				
-				if(item[i][0]<=w) {
-					// 선택 O
-					int sel_o = memoi[i-1][w-item[i][0]] + item[i][1];
-					
-					// 선택 X
-					int sel_x = memoi[i-1][w];
-					
-					memoi[i][w] = Math.max(sel_o, sel_x);
-				} else {
-					memoi[i][w] = memoi[i-1][w];
-				}
+			// 가장 큰 무게부터 작은 무게로 움직이면서
+			for(int w=K; w>=item[i][0]; w--) {
+				// memoi[w] => i번째 item 을 고려하기 전까지 w 무게를 만드는데 최상의 value
+				// memoi[w] 를 새로운 현재 고려하는 값으로 덮어쓰지 않으면 이전 item을 고려한 최상의 value
+				memoi[w] = Math.max(memoi[w], memoi[w-item[i][0]] + item[i][1]);
 			}
 		}
 		
-		System.out.println(memoi[N][K]);
+		System.out.println(memoi[K]);
 	}
 
 }
