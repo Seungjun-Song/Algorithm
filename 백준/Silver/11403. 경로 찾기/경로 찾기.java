@@ -11,43 +11,43 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
 
         n = Integer.parseInt(br.readLine());
         graph = new int[n][n];
+
         for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
+            StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 0; j < n; j++) {
                 graph[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        answer = graph.clone();
+        answer = new int[n][n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (graph[i][j] == 1) {
-                    visited = new boolean[n];
-                    visited[j] = true;
-                    dfs(i, j);
-                }
-            }
+            dfs(i, i, new boolean[n]);
         }
 
+        printAnswer();
+    }
+
+    private static void dfs(int start, int current, boolean[] visited) {
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(answer[i][j] + " ");
+            if (!visited[i] && graph[current][i] == 1) {
+                visited[i] = true;
+                answer[start][i] = 1;
+                dfs(start, i, visited);
             }
-            System.out.println();
         }
     }
 
-    private static void dfs(int start, int point) {
+    private static void printAnswer() {
+        StringBuffer sb = new StringBuffer();
         for (int i = 0; i < n; i++) {
-            if (!visited[i] && graph[point][i] == 1) {
-                visited[i] = true;
-                answer[start][i] = 1;
-                dfs(start, i);
+            for (int j = 0; j < n; j++) {
+                sb.append(answer[i][j]).append(" ");
             }
+            sb.append("\n");
         }
+        System.out.println(sb);
     }
 }
