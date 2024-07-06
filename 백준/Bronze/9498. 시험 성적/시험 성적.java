@@ -5,22 +5,14 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int score = sc.nextInt();
 
-        switch (score / 10) {
-            case 10:
-            case 9:
-                System.out.println("A");
-                break;
-            case 8:
-                System.out.println("B");
-                break;
-            case 7:
-                System.out.println("C");
-                break;
-            case 6:
-                System.out.println("D");
-                break;
-            default:
-                System.out.println("F");
-        }
+        String grade = switch (score / 10) {
+            case 10, 9 -> "A";
+            case 8 -> "B";
+            case 7 -> "C";
+            case 6 -> "D";
+            default -> "F";
+        };
+
+        System.out.println(grade);
     }
 }
