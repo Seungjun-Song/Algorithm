@@ -6,7 +6,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        int K = (int) (Math.log(N) / Math.log(2));
 
         int[][] arr = new int[N][N];
         for (int i = 0; i < N; i++) {
@@ -16,12 +15,12 @@ public class Main {
             }
         }
 
-        int[][] square;
-        while (K-- > 0) {
-            N = (int) Math.pow(2, K);
-            square = new int[N][N];
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
+        while (N > 1) {
+            int newSize = N / 2;
+            int[][] square = new int[newSize][newSize];
+
+            for (int i = 0; i < newSize; i++) {
+                for (int j = 0; j < newSize; j++) {
                     int maxNumber = Integer.MIN_VALUE;
                     int secondNumber = Integer.MIN_VALUE;
 
@@ -40,7 +39,8 @@ public class Main {
                     square[i][j] = secondNumber;
                 }
             }
-            arr = square.clone();
+            arr = square;
+            N = newSize;
         }
 
         System.out.println(arr[0][0]);
