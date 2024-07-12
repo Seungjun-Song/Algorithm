@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -20,33 +18,32 @@ public class Main {
             }
 
             switch (command) {
-                case "add":
+                case "add" -> {
                     set.add(number);
-                    break;
-                case "remove":
+                }
+                case "remove" -> {
                     set.remove(number);
-                    break;
-                case "check":
+                }
+                case "check" -> {
                     sb.append(set.contains(number) ? 1 : 0).append("\n");
-                    break;
-                case "toggle":
-                    if (set.contains(number)) {
+                }
+                case "toggle" -> {
+                    if (set.contains(number))
                         set.remove(number);
-                    } else {
+                    else
                         set.add(number);
-                    }
-                    break;
-                case "all":
+                }
+                case "all" -> {
                     set.clear();
                     for (int j = 1; j <= 20; j++) {
                         set.add(j);
                     }
-                    break;
-                case "empty":
+                }
+                case "empty" -> {
                     set.clear();
-                    break;
-            }
+                }
+            };
         }
-        System.out.print(sb.toString());
+        System.out.println(sb);
     }
 }
