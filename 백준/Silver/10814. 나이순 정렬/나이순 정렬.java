@@ -1,36 +1,29 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Comparator;
- 
+import java.util.StringTokenizer;
+
 public class Main {
-	public static void main(String[] args) {		
- 
-		Scanner in = new Scanner(System.in);
-		
-		int N = in.nextInt();
-		String[][] arr = new String[N][2];
-		
- 
-		for(int i = 0; i < N; i++) {
-			arr[i][0] = in.next();	// 나이
-			arr[i][1] = in.next();	// 이름
-		}
- 
-		
-		Arrays.sort(arr, new Comparator<String[]>() {
-			// 나이순으로 정렬
-			@Override
-			public int compare(String[] s1, String[] s2) {
-				return Integer.parseInt(s1[0]) - Integer.parseInt(s2[0]);
-			}
-			
-		});
-		
-		for(int i = 0; i < N; i++) {
-			System.out.println(arr[i][0] + " " + arr[i][1]);
-		}
-        
-		
-	}
- 
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        String[][] user = new String[N][2];
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            user[i][0] = st.nextToken();
+            user[i][1] = st.nextToken();
+        }
+
+        Arrays.sort(user, (o1, o2) -> {
+            int x = Integer.parseInt(o1[0]);
+            int y = Integer.parseInt(o2[0]);
+            return x - y;
+        });
+
+        for (int i = 0; i < N; i++) {
+            System.out.println(user[i][0] + " " + user[i][1]);
+        }
+    }
 }
