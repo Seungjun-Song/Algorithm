@@ -1,43 +1,40 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
+
+class Student {
+    String name;
+    int korean, english, math;
+
+    public Student(String name, int korean, int english, int math) {
+        this.name = name;
+        this.korean = korean;
+        this.english = english;
+        this.math = math;
+    }
+}
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        String[][] score = new String[N][4];
+        List<Student> students = new ArrayList<>();
         for(int i=0; i<N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for(int j=0; j<4; j++) {
-                score[i][j] = st.nextToken();
-            }
+            students.add(new Student(st.nextToken(), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
         }
 
-        Arrays.sort(score, (a, b) -> {
-            int korean1 = Integer.parseInt(a[1]);
-            int korean2 = Integer.parseInt(b[1]);
-            int english1 = Integer.parseInt(a[2]);
-            int english2 = Integer.parseInt(b[2]);
-            int math1 = Integer.parseInt(a[3]);
-            int math2 = Integer.parseInt(b[3]);
-            if(korean1 == korean2) {
-                if(english1 == english2) {
-                    if(math1 == math2) {
-                        return a[0].compareTo(b[0]);
-                    }
-                    return math2 - math1;
-                }
-                return english1 - english2;
-            }
-            return korean2 - korean1;
+        Collections.sort(students, (a, b) -> {
+            if(a.korean != b.korean) return b.korean - a.korean;
+            else if(a.english != b.english) return a.english - b.english;
+            else if(a.math != b.math) return b.math - a.math;
+            else return a.name.compareTo(b.name);
         });
 
         for(int i=0; i<N; i++) {
-            System.out.println(score[i][0]);
+            System.out.println(students.get(i).name);
         }
     }
 }
